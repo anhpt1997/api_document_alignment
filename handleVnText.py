@@ -41,7 +41,6 @@ def removeSpecialCharacter(text):
 	text = removeMultiSpaceToSpace(text)
 	return text
 
-
 def removeMultiSpaceToSpace(string):
 	return re.sub(' +', ' ', string)
 

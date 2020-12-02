@@ -4,10 +4,11 @@ import numpy as np
 from w2vec import * 
 from utils import * 
 from segment_api import * 
+from cosin_sim import * 
 
 vocab = readWord2Vec()
 
-keys = vocab.wv.vocab
+# keys = vocab.wv.vocab
 
 annotator = getAnnotator()
 
@@ -16,7 +17,7 @@ text1 = """Cải cách WTO để ứng phó với tình hình mới. Ban Thư k�
 
 seg = segment_doc(text1 , annotator)
 
-s2 = get_listWordByVocab(text1 , annotator , keys)
+s2 = get_listWordByVocab(text1 , annotator , vocab)
 
 # with open("../test1/vn_raw.txt" , "r") as f:
 # 	raws = f.readlines()
@@ -31,5 +32,10 @@ s2 = get_listWordByVocab(text1 , annotator , keys)
 # l = get_listWordByVocab(text1)
 # l2 = segment_doc(text1)
 # l2 = get_listWordByVocab(text2)
-print(seg)
-print(s2)
+# print(seg)
+# print(s2)
+import time 
+s = time.time()
+print(computeMatrixSimilarity([text1],[text1 , text1],annotator , vocab))
+e = time.time()
+print(e-s)
