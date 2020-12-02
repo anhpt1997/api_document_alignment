@@ -76,3 +76,20 @@ def processDoc(doc):
 	doc = removeStopword(doc)
 	doc = removeMultiSpaceToSpace(doc)
 	return doc 
+
+def removeStopwordFromListString(list):
+    return [t for t in list if t.lower() not in stopWords]
+
+def removePuncFromListString(list):
+    return [t for t in list if t not in punc]
+
+def segment_doc(text1):
+	text1 = norm_text(text1)
+	text1 = insertSpaceToPunce(text1)
+	text1 = removeSpecialCharacter(text1)
+	word_segmented_text1 = annotator.tokenize(text1) 
+	a = sum(word_segmented_text1 , [])
+	a = removeStopwordFromListString(a)
+	a = removePuncFromListString(a)
+	a = [word.lower() for word in a]
+	return a 
