@@ -83,7 +83,7 @@ def removeStopwordFromListString(list):
 def removePuncFromListString(list):
     return [t for t in list if t not in punc]
 
-def segment_doc(text1):
+def segment_doc(text1 , annotator):
 	text1 = norm_text(text1)
 	text1 = insertSpaceToPunce(text1)
 	text1 = removeSpecialCharacter(text1)
