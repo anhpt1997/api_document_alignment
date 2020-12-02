@@ -26,3 +26,6 @@ def write_result_array(array , file):
 	with open(file , "w") as f:
 		result = "\n".join([ " ".join([ str(round(array[i][j] , 2)) for j in range(len(array[i]))])  for i in range(array.shape[0])])
 		f.write(result)
+
+def readListDocFromFile(file , delimiter):
+    pass 

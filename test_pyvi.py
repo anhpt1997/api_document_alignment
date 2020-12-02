@@ -3,7 +3,7 @@ import pickle
 import numpy as np 
 from w2vec import * 
 from utils import * 
-from segment_api import * 
+from segment import * 
 from cosin_sim import * 
 
 vocab = readWord2Vec()
