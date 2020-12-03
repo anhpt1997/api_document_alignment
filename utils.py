@@ -71,9 +71,29 @@ def splitAndWriteDocToFileBySegmentLength(file_in , file_out , segmentLength = 1
             for segment in listSegmentContent:
                 f.write(doc_id + "<<<f>>>" + segment + "\n")
 
-def readAndConcateSegmentToDocFromFile(file):
-    pass
+def readAndConcateSegmentToDocFromFile(file_in , file_out):
+    with open(file_out , "w") as f_w:
+        with open(file_in, "r") as f_r:
+            result = []
+            for i, line in enumerate(f_r):
+                print(line)
+                doc_id , doc_content = line.split("<<<f>>>")[0] , line.split("<<<f>>>")[1]
+                if len(result) == 0:
+                    current_idDoc = doc_id
+                    result = [doc_content]
+                else:
+                    if doc_id == current_idDoc:
+                        result.append(doc_content)
+                    else:
+                        #write current doc to file
+                        f_w.write(current_idDoc + "<<<f>>>" + " ".join(result) + "\n")
+                        result = [doc_content]
+                        current_idDoc = doc_id
+            f_w.write(current_idDoc + "<<<f>>>" + " ".join(result) + "\n")
 
-listDoc = readListDocFromFileByDelimiter("1.txt")
-writeListDocToFile(listDoc , '2.txt')
-splitAndWriteDocToFileBySegmentLength(file_in = '2.txt' , file_out = '3.txt' , segmentLength=1000)
+    
+
+# listDoc = readListDocFromFileByDelimiter("1.txt")
+# writeListDocToFile(listDoc , '2.txt')
+# splitAndWriteDocToFileBySegmentLength(file_in = '2.txt' , file_out = '3.txt' , segmentLength=1000)
+readAndConcateSegmentToDocFromFile('3.txt','4.txt')
