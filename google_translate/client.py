@@ -7,11 +7,11 @@ We can translate text using this module
 
 import requests
 
-from urls import TRANSLATE
-from utils import format_json
-from constants import DEFAULT_USER_AGENT, LANGUAGES, SPECIAL_CASES, LANGCODES
-from gtoken import TokenAcquirer
-from utils import build_params
+from google_translate.urls import TRANSLATE
+from google_translate.utils import format_json
+from google_translate.constants import DEFAULT_USER_AGENT, LANGUAGES, SPECIAL_CASES, LANGCODES
+from google_translate.gtoken import TokenAcquirer
+from google_translate.utils import build_params
 # from similarity.core.models.language_detected import LanguageDetected
 
 

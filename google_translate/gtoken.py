@@ -5,7 +5,7 @@ import re
 import time
 import requests
 
-from utils import rshift
+from google_translate.utils import rshift
 
 
 class TokenAcquirer(object):

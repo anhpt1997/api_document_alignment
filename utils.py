@@ -33,11 +33,6 @@ def readLinesFromFile(file , delimiter = "\n"):
         lines = [line.replace("\n","") for line in lines]
     return lines
 
-def getPairDocFromResult():
-    pass 
-
-def writePairDocToFile():
-    pass 
 
 def splitDocToSegment(doc, max_segment_size):
     characters = list(doc)
@@ -76,7 +71,7 @@ def readAndConcateSegmentToDocFromFile(file_in , file_out):
         with open(file_in, "r") as f_r:
             result = []
             for i, line in enumerate(f_r):
-                print(line)
+                line = line.replace("\n","")
                 doc_id , doc_content = line.split("<<<f>>>")[0] , line.split("<<<f>>>")[1]
                 if len(result) == 0:
                     current_idDoc = doc_id
@@ -86,14 +81,29 @@ def readAndConcateSegmentToDocFromFile(file_in , file_out):
                         result.append(doc_content)
                     else:
                         #write current doc to file
-                        f_w.write(current_idDoc + "<<<f>>>" + " ".join(result) + "\n")
+                        f_w.write(" ".join(result) + "\n")
                         result = [doc_content]
                         current_idDoc = doc_id
-            f_w.write(current_idDoc + "<<<f>>>" + " ".join(result) + "\n")
+            f_w.write(" ".join(result) + "\n")
 
-    
+def getPairDocFromResult(resultSimMatrix , listDoc_vn, listDoc_khrme , file_out , thresol = 0.9):
+    with open(file_out , "w") as f:
+        result = []
+        for i in range(len(listDoc_vn)):
+            result_temp_i = -1
+            current_value_i = thresol
+            for j in range(len(listDoc_khrme)):
+                if resultSimMatrix[i][j] > current_value_i :
+                    result_temp_i = j
+                    current_value_i = resultSimMatrix[i][j]
+            if result_temp_i > -1:
+                result.append((i,result_temp_i))
+        print(result)
+        for pairIndex in result:
+            f.write(listDoc_vn[pairIndex[0]] + "<<<f>>>" + listDoc_khrme[pairIndex[1]]+"\n")
+
 
 # listDoc = readListDocFromFileByDelimiter("1.txt")
 # writeListDocToFile(listDoc , '2.txt')
 # splitAndWriteDocToFileBySegmentLength(file_in = '2.txt' , file_out = '3.txt' , segmentLength=1000)
-readAndConcateSegmentToDocFromFile('3.txt','4.txt')
+# readAndConcateSegmentToDocFromFile('3.txt','4.txt')
