@@ -38,6 +38,7 @@ def removeSpecialCharacter(text):
 	text = text.replace("\n"," ")
 	text = text.replace("\t"," ")
 	text = text.replace("\xa0", " ")
+	text = text.replace("\u200b" , " ")
 	text = removeMultiSpaceToSpace(text)
 	return text
 

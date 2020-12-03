@@ -38,3 +38,35 @@ def getPairDocFromResult():
 
 def writePairDocToFile():
     pass 
+
+def splitDocToSegment(doc, max_segment_size):
+    characters = list(doc)
+    start = 0 
+    end = min(max_segment_size , len(characters))
+    result = [doc[start:end]]
+    while end < len(characters) : 
+        start = end 
+        end = min(start + max_segment_size , len(characters))
+        result.append(doc[start :end])
+    return result
+
+def readListDocFromFileByDelimiter(file , delimiter = "#"):
+    with open(file , 'r') as f :
+        data = f.read()
+    listDoc = data.split("#")
+    return listDoc
+
+def writeListDocToFile(listDoc , file):
+    with open(file , 'w') as f:
+        for i , doc in enumerate(listDoc):
+            doc = doc.replace("<<<f>>>","")
+            f.write( str(i) + "<<<f>>>" + removeSpecialCharacter(doc) + "\n")
+
+def splitAndWriteDocToFileBySegmentLength():
+    pass 
+
+def readAndConcateSegmentToDocFromFile(file):
+    pass
+
+listDoc = readListDocFromFileByDelimiter("1.txt")
+writeListDocToFile(listDoc , '2.txt')
