@@ -27,7 +27,7 @@ def write_result_array(array , file):
 		result = "\n".join([ " ".join([ str(round(array[i][j] , 2)) for j in range(len(array[i]))])  for i in range(array.shape[0])])
 		f.write(result)
 
-def readListDocFromFile(file , delimiter = "\n"):
+def readLinesFromFile(file , delimiter = "\n"):
     with open(file , 'r') as f:
         lines = f.readlines()
         lines = [line.replace("\n","") for line in lines]
@@ -62,11 +62,18 @@ def writeListDocToFile(listDoc , file):
             doc = doc.replace("<<<f>>>","")
             f.write( str(i) + "<<<f>>>" + removeSpecialCharacter(doc) + "\n")
 
-def splitAndWriteDocToFileBySegmentLength():
-    pass 
+def splitAndWriteDocToFileBySegmentLength(file_in , file_out , segmentLength = 1000):
+    lines  = readLinesFromFile(file_in)
+    with open(file_out , 'w') as f:
+        for line in lines :
+            doc_id , doc_content = line.split("<<<f>>>")[0] , line.split("<<<f>>>")[1]
+            listSegmentContent = splitDocToSegment(doc_content , max_segment_size= segmentLength)
+            for segment in listSegmentContent:
+                f.write(doc_id + "<<<f>>>" + segment + "\n")
 
 def readAndConcateSegmentToDocFromFile(file):
     pass
 
 listDoc = readListDocFromFileByDelimiter("1.txt")
 writeListDocToFile(listDoc , '2.txt')
+splitAndWriteDocToFileBySegmentLength(file_in = '2.txt' , file_out = '3.txt' , segmentLength=1000)
