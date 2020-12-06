@@ -1,5 +1,27 @@
 from handleVnText import * 
 
+listPuncKhrme =['ៗ', '។' ,'៕']
+
+
+def splitDocByPunctuation(doc, listPunc, segment_length):
+    doc = doc.replace("\n","")
+    for punc in listPunc:
+        doc = doc.replace(punc , "\n")
+    listSegment = [ t for t in doc.split("\n") if t != '']
+    result = [] 
+    for segment in listSegment:
+        result += splitDocToSegment(segment , segment_length)
+    return result
+
+def concateListtoObtainSegmentLength(listSegment , maxSegmentLength):
+    if len(listSegment) == 1:
+        return listSegment
+    else:
+        start = 0 
+        result = []
+        for i in range(len(listSegment)):
+            
+
 def readDocFromFile(file):
     with open(file , 'r') as f:
         data = f.read()
@@ -61,7 +83,7 @@ def splitAndWriteDocToFileBySegmentLength(file_in , file_out , segmentLength = 1
     with open(file_out , 'w') as f:
         for line in lines :
             doc_id , doc_content = line.split("<<<f>>>")[0] , line.split("<<<f>>>")[1]
-            listSegmentContent = splitDocToSegment(doc_content , max_segment_size= segmentLength)
+            listSegmentContent = splitDocByPunctuation(doc_content, listPunc= listPuncKhrme , segment_length= segmentLength)
             for segment in listSegmentContent:
                 f.write(doc_id + "<<<f>>>" + segment + "\n")
 
@@ -101,20 +123,10 @@ def getPairDocFromResult(resultSimMatrix , listDoc_vn, listDoc_khrme , file_out 
         for pairIndex in result:
             f.write(listDoc_vn[pairIndex[0]] + "<<<f>>>" + listDoc_khrme[pairIndex[1]]+"\n")
 
-def splitDocByPunctuation(doc, listPunc, segment_length):
-    doc = doc.replace("\n","")
-    for punc in listPunc:
-        doc = doc.replace(punc , "\n")
-    listSegment = [ t for t in doc.split("\n") if t != '']
-    result = [] 
-    for segment in listSegment:
-        result += splitDocToSegment(segment , segment_length)
-    return result
 
 
-listPunc =['ៗ', '។' ,'៕']
-string = """នារសៀលថ្ងៃទី៤ ធ្នូ ឧបនាយករដ្ឋមន្រ្តីនិងជារដ្ឋមន្រ្តីការបរទេសវៀត ណាមលោក Pham Binh Minh និងរដ្ឋមន្ត្រីការបរទេសន័រវេស លោកស្រី Marie Eriksen Soreide បានជួបពិភាក្សាការងារតាមប្រព័ន្ធវីដេអូ អំពីស្ថាន ភាពទំនាក់ទំនងរវាងប្រទេសទាំងពីរ និងកិច្ចសហប្រតិបត្តិការនៅក្រុម ប្រឹក្សាសន្តិសុខអង្គការសហប្រជាជាតិក្នុងឆ្នាំ២០២១ ពេលដែលន័រវេសចាប់ ផ្ដើមកាន់តំណែងជាសមាជិកមិនអចិន្រ្តៃយ៍នៃក្រុមប្រឹក្សាសន្តិសុខ។ ភាគី ទាំងពីរបានវាយតម្លៃខ្ពស់ចំពោះការអភិវឌ្ឍនៃទំនាក់ទំនងទ្វេភាគីនាពេល កន្លងមក ព្រមទាំងឯកភាពលើការថែរក្សានិងពង្រីកកិច្ចសហប្រតិបត្តិការ លើវិស័យសេដ្ឋកិច្ច ពាណិជ្ជកម្ម វិនិយោគ ជាពិសេសគឺវិស័យដែល ប្រទេសទាំងពីរមានឧត្តមភាពដូចជា ការចិញ្ចឹមជលផល ថាមពលស្អាត ការស្រាវជ្រាវវិទ្យាសាស្ត្រសមុទ្រ កិច្ចការពារបរិស្ថានសមុទ្រ និងប្រេង ឧស្ម័ន ជាដើម។ រដ្ឋមន្រ្តីការបរទេសទាំងពីររូបបានអះអាងថា ភាគីទាំងពីរ នឹងបន្តរក្សានិងបង្កើនយន្តការពិគ្រោះយោបល់ សំដៅចែករំលែកព័ត៌មាន ទស្សនៈទៅវិញទៅមក ស្វែងរកសម្លេងរួមនិងជំរុញការមូលមតិឯកឆន្ទ ក្នុង ការដោះស្រាយបញ្ហានានានៅក្នុងក្របខ័ណ្ឌក្រុមប្រឹក្សាសន្តិសុខអ.ស.បផងដែរ៕
-"""
-listSegment  = splitDocByPunctuation(string , listPunc , 1000)
-for i, segment in enumerate(listSegment):
-    print( i, "   ", segment)
+# string = """នារសៀលថ្ងៃទី៤ ធ្នូ ឧបនាយករដ្ឋមន្រ្តីនិងជារដ្ឋមន្រ្តីការបរទេសវៀត ណាមលោក Pham Binh Minh និងរដ្ឋមន្ត្រីការបរទេសន័រវេស លោកស្រី Marie Eriksen Soreide បានជួបពិភាក្សាការងារតាមប្រព័ន្ធវីដេអូ អំពីស្ថាន ភាពទំនាក់ទំនងរវាងប្រទេសទាំងពីរ និងកិច្ចសហប្រតិបត្តិការនៅក្រុម ប្រឹក្សាសន្តិសុខអង្គការសហប្រជាជាតិក្នុងឆ្នាំ២០២១ ពេលដែលន័រវេសចាប់ ផ្ដើមកាន់តំណែងជាសមាជិកមិនអចិន្រ្តៃយ៍នៃក្រុមប្រឹក្សាសន្តិសុខ។ ភាគី ទាំងពីរបានវាយតម្លៃខ្ពស់ចំពោះការអភិវឌ្ឍនៃទំនាក់ទំនងទ្វេភាគីនាពេល កន្លងមក ព្រមទាំងឯកភាពលើការថែរក្សានិងពង្រីកកិច្ចសហប្រតិបត្តិការ លើវិស័យសេដ្ឋកិច្ច ពាណិជ្ជកម្ម វិនិយោគ ជាពិសេសគឺវិស័យដែល ប្រទេសទាំងពីរមានឧត្តមភាពដូចជា ការចិញ្ចឹមជលផល ថាមពលស្អាត ការស្រាវជ្រាវវិទ្យាសាស្ត្រសមុទ្រ កិច្ចការពារបរិស្ថានសមុទ្រ និងប្រេង ឧស្ម័ន ជាដើម។ រដ្ឋមន្រ្តីការបរទេសទាំងពីររូបបានអះអាងថា ភាគីទាំងពីរ នឹងបន្តរក្សានិងបង្កើនយន្តការពិគ្រោះយោបល់ សំដៅចែករំលែកព័ត៌មាន ទស្សនៈទៅវិញទៅមក ស្វែងរកសម្លេងរួមនិងជំរុញការមូលមតិឯកឆន្ទ ក្នុង ការដោះស្រាយបញ្ហានានានៅក្នុងក្របខ័ណ្ឌក្រុមប្រឹក្សាសន្តិសុខអ.ស.បផងដែរ៕"""
+
+# listSegment  = splitDocByPunctuation(string , listPunc , 1000)
+# for i, segment in enumerate(listSegment):
+#     print( i, "   ", segment, len(segment))

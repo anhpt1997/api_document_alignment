@@ -49,7 +49,6 @@ class Translator(object):
         token = self.token_acquirer.do(text)
         params = build_params(query=text, src=src, dest=dest, token=token, override=override)
         url = TRANSLATE.format(host=self.service_url)
-        print(url, params, token)
         res = self.session.get(url=url, params=params)
 
 
