@@ -4,7 +4,7 @@ listPuncKhrme =['ៗ', '។' ,'៕']
 
 
 def splitDocByPunctuation(doc, listPunc, segment_length):
-    doc = doc.replace("\n","")
+    doc = doc.replace("\n"," ")
     for punc in listPunc:
         doc = doc.replace(punc , "\n")
     listSegment = [ t for t in doc.split("\n") if t != '']
@@ -43,7 +43,7 @@ def concateListtoObtainSegmentLength(listSegment , maxSegmentLength):
 def readDocFromFile(file):
     with open(file , 'r') as f:
         data = f.read()
-        data = data.replace("\n","")
+        data = data.replace("\n"," ")
     return data  
 
 def writeDocToFile(data, file):
