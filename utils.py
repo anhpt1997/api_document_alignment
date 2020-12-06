@@ -43,6 +43,7 @@ def concateListtoObtainSegmentLength(listSegment , maxSegmentLength):
 def readDocFromFile(file):
     with open(file , 'r') as f:
         data = f.read()
+        data = data.replace("\n","")
     return data  
 
 def writeDocToFile(data, file):
@@ -96,13 +97,13 @@ def writeListDocToFile(listDoc , file):
             doc = doc.replace("<<<f>>>","")
             f.write( str(i) + "<<<f>>>" + removeSpecialCharacter(doc) + "\n")
 
-def splitAndWriteDocToFileBySegmentLength(file_in , file_out , segmentLength = 1000):
+def splitAndWriteDocToFileBySegmentLength(file_in , file_out , segmentLength = 500):
     lines  = readLinesFromFile(file_in)
     with open(file_out , 'w') as f:
         for line in lines :
             doc_id , doc_content = line.split("<<<f>>>")[0] , line.split("<<<f>>>")[1]
             _ = splitDocByPunctuation(doc_content, listPunc= listPuncKhrme , segment_length= segmentLength)
-            listSegmentContent = concateListtoObtainSegmentLength(_ , maxSegmentLength = 1000)
+            listSegmentContent = concateListtoObtainSegmentLength(_ , maxSegmentLength = segmentLength)
             for segment in listSegmentContent:
                 f.write(doc_id + "<<<f>>>" + segment + "\n")
 
