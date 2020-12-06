@@ -33,7 +33,6 @@ def readLinesFromFile(file , delimiter = "\n"):
         lines = [line.replace("\n","") for line in lines]
     return lines
 
-
 def splitDocToSegment(doc, max_segment_size):
     characters = list(doc)
     start = 0 
@@ -102,8 +101,20 @@ def getPairDocFromResult(resultSimMatrix , listDoc_vn, listDoc_khrme , file_out 
         for pairIndex in result:
             f.write(listDoc_vn[pairIndex[0]] + "<<<f>>>" + listDoc_khrme[pairIndex[1]]+"\n")
 
+def splitDocByPunctuation(doc, listPunc, segment_length):
+    doc = doc.replace("\n","")
+    for punc in listPunc:
+        doc = doc.replace(punc , "\n")
+    listSegment = [ t for t in doc.split("\n") if t != '']
+    result = [] 
+    for segment in listSegment:
+        result += splitDocToSegment(segment , segment_length)
+    return result
 
-# listDoc = readListDocFromFileByDelimiter("1.txt")
-# writeListDocToFile(listDoc , '2.txt')
-# splitAndWriteDocToFileBySegmentLength(file_in = '2.txt' , file_out = '3.txt' , segmentLength=1000)
-# readAndConcateSegmentToDocFromFile('3.txt','4.txt')
+
+listPunc =['ៗ', '។' ,'៕']
+string = """នារសៀលថ្ងៃទី៤ ធ្នូ ឧបនាយករដ្ឋមន្រ្តីនិងជារដ្ឋមន្រ្តីការបរទេសវៀត ណាមលោក Pham Binh Minh និងរដ្ឋមន្ត្រីការបរទេសន័រវេស លោកស្រី Marie Eriksen Soreide បានជួបពិភាក្សាការងារតាមប្រព័ន្ធវីដេអូ អំពីស្ថាន ភាពទំនាក់ទំនងរវាងប្រទេសទាំងពីរ និងកិច្ចសហប្រតិបត្តិការនៅក្រុម ប្រឹក្សាសន្តិសុខអង្គការសហប្រជាជាតិក្នុងឆ្នាំ២០២១ ពេលដែលន័រវេសចាប់ ផ្ដើមកាន់តំណែងជាសមាជិកមិនអចិន្រ្តៃយ៍នៃក្រុមប្រឹក្សាសន្តិសុខ។ ភាគី ទាំងពីរបានវាយតម្លៃខ្ពស់ចំពោះការអភិវឌ្ឍនៃទំនាក់ទំនងទ្វេភាគីនាពេល កន្លងមក ព្រមទាំងឯកភាពលើការថែរក្សានិងពង្រីកកិច្ចសហប្រតិបត្តិការ លើវិស័យសេដ្ឋកិច្ច ពាណិជ្ជកម្ម វិនិយោគ ជាពិសេសគឺវិស័យដែល ប្រទេសទាំងពីរមានឧត្តមភាពដូចជា ការចិញ្ចឹមជលផល ថាមពលស្អាត ការស្រាវជ្រាវវិទ្យាសាស្ត្រសមុទ្រ កិច្ចការពារបរិស្ថានសមុទ្រ និងប្រេង ឧស្ម័ន ជាដើម។ រដ្ឋមន្រ្តីការបរទេសទាំងពីររូបបានអះអាងថា ភាគីទាំងពីរ នឹងបន្តរក្សានិងបង្កើនយន្តការពិគ្រោះយោបល់ សំដៅចែករំលែកព័ត៌មាន ទស្សនៈទៅវិញទៅមក ស្វែងរកសម្លេងរួមនិងជំរុញការមូលមតិឯកឆន្ទ ក្នុង ការដោះស្រាយបញ្ហានានានៅក្នុងក្របខ័ណ្ឌក្រុមប្រឹក្សាសន្តិសុខអ.ស.បផងដែរ៕
+"""
+listSegment  = splitDocByPunctuation(string , listPunc , 1000)
+for i, segment in enumerate(listSegment):
+    print( i, "   ", segment)
