@@ -14,13 +14,31 @@ def splitDocByPunctuation(doc, listPunc, segment_length):
     return result
 
 def concateListtoObtainSegmentLength(listSegment , maxSegmentLength):
+    
+    if len(listSegment) == 0 :
+        return []
+    
     if len(listSegment) == 1:
         return listSegment
+    
     else:
         start = 0 
         result = []
-        for i in range(len(listSegment)):
-            
+        temp  = [0]
+        currentSumLength = len(listSegment[0])
+
+        for i in range(1 , len(listSegment)):
+            if len(listSegment[i]) + currentSumLength <= maxSegmentLength:
+                temp.append(i)
+                currentSumLength += len(listSegment[i])
+            else:
+                result.append(" . ".join([ listSegment[t] for t in temp]))
+                temp = [i]
+                currentSumLength = len(listSegment[i])
+        result.append(" . ".join([listSegment[t] for t in temp]))
+
+    return result
+
 
 def readDocFromFile(file):
     with open(file , 'r') as f:
@@ -83,7 +101,8 @@ def splitAndWriteDocToFileBySegmentLength(file_in , file_out , segmentLength = 1
     with open(file_out , 'w') as f:
         for line in lines :
             doc_id , doc_content = line.split("<<<f>>>")[0] , line.split("<<<f>>>")[1]
-            listSegmentContent = splitDocByPunctuation(doc_content, listPunc= listPuncKhrme , segment_length= segmentLength)
+            _ = splitDocByPunctuation(doc_content, listPunc= listPuncKhrme , segment_length= segmentLength)
+            listSegmentContent = concateListtoObtainSegmentLength(_ , maxSegmentLength = 1000)
             for segment in listSegmentContent:
                 f.write(doc_id + "<<<f>>>" + segment + "\n")
 
@@ -130,3 +149,6 @@ def getPairDocFromResult(resultSimMatrix , listDoc_vn, listDoc_khrme , file_out 
 # listSegment  = splitDocByPunctuation(string , listPunc , 1000)
 # for i, segment in enumerate(listSegment):
 #     print( i, "   ", segment, len(segment))
+
+# listSegment = ['abc','def','fdfsd','frgthjkli']
+# print(concateListtoObtainSegmentLength(listSegment , 10))
