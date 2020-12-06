@@ -18,8 +18,22 @@ def compute_cosine_simListDoc(list1 , list2):
 	result = np.zeros(shape = (len(list1) , len(list2)))
 	for i in range(len(list1)):
 		for j in range(len(list2)):
-			result[i][j] = get_cosine_sim([list1[i] , list2[j]])[0,1]
+			result[i][j] = get_cosine_sim([ list1[i] , list2[j]  ])[0,1]
 	return result
+
+def computeCosinBowPairDoc(doc1, doc2):
+	return get_cosine_sim( [doc1 , doc2])[0,1]
+
+def readAndProcessDocForCosinBoW(file):
+	with open(file, "r") as f:
+		text = f.read()
+		text = processDoc(text.replace("\n",""))
+	return text
+
+def computeCosinBowPairFile(file_1 , file_2):
+	doc_1 = readAndProcessDocForCosinBoW(file_1)
+	doc_2 = readAndProcessDocForCosinBoW(file_2)
+	return computeCosinBowPairDoc(doc_1 , doc_2)
 
 def jaccard_similarity(list1, list2):
 	s1 = set(list1)
@@ -54,19 +68,17 @@ def compute_rouge_listDoc( list1 , list2):
 			result[i][j] = compute_rouge_document(list1[i] , list2[j])
 	return result
 
-with open("test1/vn_raw.txt" , "r") as f:
-	raws = f.readlines()
-	raws =[processDoc(raw.replace("\n","")) for raw in raws]
-
-with open("test1/vn_translate.txt","r") as f:
-	translates = f.readlines()
-	translates = [processDoc(translate.replace("\n","")) for translate in translates]
 
 
-def write_result_array(array , file):
+# with open("test1/vn_translate.txt","r") as f:
+# 	translates = f.readlines()
+# 	translates = [processDoc(translate.replace("\n","")) for translate in translates]
 
-	with open(file , "w") as f:
-		result = "\n".join([ " ".join([ str(round(array[i][j] , 2)) for j in range(len(array[i]))])  for i in range(array.shape[0])])
-		f.write(result)
 
-write_result_array(compute_cosine_simListDoc(translates , raws) , "test1/result_test_1.txt")
+# def write_result_array(array , file):
+
+# 	with open(file , "w") as f:
+# 		result = "\n".join([ " ".join([ str(round(array[i][j] , 2)) for j in range(len(array[i]))])  for i in range(array.shape[0])])
+# 		f.write(result)
+
+# write_result_array(compute_cosine_simListDoc(translates , raws) , "test1/result_test_1.txt")

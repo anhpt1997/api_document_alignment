@@ -4,6 +4,7 @@ from cosin_sim import *
 from w2vec import * 
 from segment import * 
 from google_translate.run_translate import * 
+from comparePairDoc import * 
 
 def document_align_api():
 
@@ -35,9 +36,13 @@ def document_align_api():
 
     resultMatrixSim = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec)
 
-    print(resultMatrixSim[0][0])
+    result = computeCosinBowPairFile(file_vn_raw , 'data/file_vn_translated_indexed.txt')
 
-    getPairDocFromResult(resultMatrixSim , listDoc_vn_raw , listDoc_khrme_raw, 'result/resultDocAlign.txt', thresol= 0.9)
+    print(result)
+
+    # print(resultMatrixSim[0][0])
+
+    # getPairDocFromResult(resultMatrixSim , listDoc_vn_raw , listDoc_khrme_raw, 'result/resultDocAlign.txt', thresol= 0.9)
 
 
 if __name__ == "__main__":
