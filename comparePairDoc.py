@@ -68,17 +68,22 @@ def compute_rouge_listDoc( list1 , list2):
 			result[i][j] = compute_rouge_document(list1[i] , list2[j])
 	return result
 
+def getDifferentBetweenPairDoc(doc1, doc2):
+    word_1 = [t.strip() for t in doc1.split()]
+    word_2 = [t.strip() for t in doc2.split()]
+    return [t for t in word_1 if t not in word_2]
 
-
-# with open("test1/vn_translate.txt","r") as f:
-# 	translates = f.readlines()
-# 	translates = [processDoc(translate.replace("\n","")) for translate in translates]
-
-
-# def write_result_array(array , file):
-
-# 	with open(file , "w") as f:
-# 		result = "\n".join([ " ".join([ str(round(array[i][j] , 2)) for j in range(len(array[i]))])  for i in range(array.shape[0])])
-# 		f.write(result)
-
+import sys
+f_1 = sys.argv[1]
+f_2 = sys.argv[2]
+text_1 = readAndProcessDocForCosinBoW(f_1)
+text_2 = readAndProcessDocForCosinBoW(f_2)
+print("\n")
+temp_1 = " ".join(handleOOV(text_1))
+temp_2 = " ".join(handleOOV(text_2))
+print(temp_1)
+print("\n")
+print(temp_2)
+#print(getDifferentBetweenPairDoc(temp_1 , temp_2))
 # write_result_array(compute_cosine_simListDoc(translates , raws) , "test1/result_test_1.txt")
+print(computeCosinBowPairDoc(temp_1 , temp_2))

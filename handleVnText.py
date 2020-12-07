@@ -1,6 +1,7 @@
 import string
 import re
 import unicodedata
+from utils import * 
 
 def norm_text(text):
 	text = unicodedata.normalize('NFC', text)
@@ -28,6 +29,14 @@ punc = set(string.punctuation)
 list_punctuations_out = ['”', '”', "›", "“", '"' ,'...', '…']
 for e_punc in list_punctuations_out:
 	punc.add(e_punc)
+
+def getVocabVn():
+    with open('all-vietnam.txt' , 'r') as f:
+        words = f.readlines()
+        words =[norm_text(word.replace("\n",""))  for word in words]
+    return words
+
+vocabVn = getVocabVn()
 
 with open('stop_word.txt') as f:
 	stopWords = f.readlines()
@@ -69,8 +78,7 @@ def removePunc(string):
 
 def processDoc(doc):
 	doc = doc.lower()
-	doc = doc.replace("\n","")
-	doc = doc.replace("\t","")
+	doc = removeSpecialCharacter(doc)
 	doc = removePunc(doc)
 	doc = norm_text(doc)
 	doc = removeStopword(doc)
@@ -92,4 +100,16 @@ def segment_doc(text1 , annotator):
 	a = removeStopwordFromListString(a)
 	a = removePuncFromListString(a)
 	a = [word.lower() for word in a]
-	return a 
+	return a
+
+def handleOOV(doc):
+    words = doc.split()
+    result = []
+    for word in words:
+        if word in vocabVn:
+            result.append(word)
+        else:
+            result += list(word)
+    return result
+
+
