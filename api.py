@@ -34,7 +34,7 @@ def document_align_api():
 
     annotator = getAnnotator()
 
-    resultMatrixSim = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=True)
+    resultMatrixSim = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=False)
 
     # result = computeCosinBowPairFile(file_vn_raw , 'data/file_vn_translated_indexed.txt')
 
