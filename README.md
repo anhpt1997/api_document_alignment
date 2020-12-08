@@ -9,7 +9,7 @@ Hướng dẫn cài đặt Vncore nlp
 + clone vncore nlp bằng câu lệnh sau: git clone https://github.com/vncorenlp/VnCoreNLP.git
 + install vncore nlp bằng command line: pip install vncorenlp
 + sau khi clone và install vncorenlp, muốn sử dụng nó ta phải di chuyển vào folder vncore nlp bằng command: cd VNcore nlp
-+ run command sau: vncorenlp -Xmx2g <FULL-PATH-to-VnCoreNLP-jar-file> -p 9000 -a "wseg" trong đó : FULL-PATH-to-VnCoreNLP-jar-file là tên file .jar trong folder vừa clone về , giữ nguyên tiến trình đang chạy, không dc tắt nó trên terminal.
++ run command sau: vncorenlp -Xmx2g FULL-PATH-to-VnCoreNLP-jar-file -p 9000 -a "wseg" trong đó : FULL-PATH-to-VnCoreNLP-jar-file là tên file .jar trong folder vừa clone về , giữ nguyên tiến trình đang chạy, không dc tắt nó trên terminal.
 
 
 Chạy api tại file api.py
