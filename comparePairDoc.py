@@ -26,15 +26,28 @@ def compute_cosine_simListDoc(list1 , list2):
 def computeCosinBowPairDoc(doc1, doc2):
 	return get_cosine_sim( [doc1 , doc2])[0,1]
 
-def readAndProcessDocForCosinBoW(file , handleOOV = False):
+def readAndProcessDocForCosinBoW(file , handleOOV = False, w2vec = None):
 	with open(file, "r") as f:
 		text = f.read()
 		text = processDoc(text.replace("\n"," "))
-	return text
+	if handleOOV == False:
+		return text
+	else:
+		if w2vec == None :
+			return text 
+		else:
+			result = []
+			list_word = text.split()
+			for word in list_word:
+				if word in w2vec.vocab:
+					result.append(word)
+				else:
+					result += list(word)
+			return " ".join(result)
 
-def computeCosinBowPairFile(file_1 , file_2, handleOOV = False):
-	doc_1 = readAndProcessDocForCosinBoW(file_1 , handleOOV = handleOOV)
-	doc_2 = readAndProcessDocForCosinBoW(file_2 , handleOOV = handleOOV) 
+def computeCosinBowPairFile(file_1 , file_2, handleOOV = False , w2vec = None ):
+	doc_1 = readAndProcessDocForCosinBoW(file_1 , handleOOV = handleOOV , w2vec = w2vec)
+	doc_2 = readAndProcessDocForCosinBoW(file_2 , handleOOV = handleOOV , w2vec = w2vec) 
 	return computeCosinBowPairDoc(doc_1 , doc_2)
 
 def jaccard_similarity(list1, list2):
@@ -55,12 +68,12 @@ def jaccardSimListDoc(listDoc1, listDoc2):
 	return result
 
 def compute_rouge_document(string1 , string2 ):
-	evaluator = rouge.Rouge(metrics=['rouge-n'],
-						   max_n=2,
+	evaluator = rouge.Rouge(metrics=['rouge-l'],
+						   max_n=3,
 						   limit_length=True,
 						   length_limit=1000)
 	scores = evaluator.get_scores(string1, string2)
-	return scores['rouge-1']['f']
+	return scores['rouge-l']['f']
 
 def compute_rouge_listDoc( list1 , list2):
 

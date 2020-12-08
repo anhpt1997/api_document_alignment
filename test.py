@@ -12,9 +12,14 @@ path_src = 'test_raw_vn.txt'
 path_tgt = 'data/file_vn_translated_indexed.txt'
 src = readAndProcessDocForCosinBoW(path_src)
 tgt = readAndProcessDocForCosinBoW(path_tgt)
-list_src = [t.strip() for t in src.split()]
-list_tgt = [t.strip() for t in tgt.split()]
-print(list_src)
+# list_src = [t.strip() for t in src.split()]
+# list_tgt = [t.strip() for t in tgt.split()]
+# a = [t for t in list_src if t not in w2vecmodel.vocab]
+# b = [t for t in list_tgt if t not in w2vecmodel.vocab]
+
+print(compute_rouge_document(src , tgt))
+# print(a)
+# print(b)
 # print([t for t in list_src if t not in list_tgt])
 # print(len([t for t in list_src if t not in list_tgt]) , len(list_src))
 #doc = readDocFromFile(path)
