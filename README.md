@@ -13,7 +13,7 @@ Hướng dẫn cài đặt Vncore nlp
 
 
 Chạy api tại file api.py
-Ví dụ: python api.py test_raw_vn.txt test_raw_khrme.txt km
-trong đó:   test_raw_vn.txt là file chứa doc thuộc ngôn ngữ việt nam 
-            test_raw_khrme.txt là file chứa ngôn ngữ hiếm <không nhất thiết phải là khrme>
-            km chỉ kí hiệu của ngôn ngữ khơ me: Đối với tiếng trung là zh-cn, đối với tiếng lào là: lo
++Ví dụ: python api.py test_raw_vn.txt test_raw_khrme.txt km
++trong đó:  - test_raw_vn.txt là file chứa doc thuộc ngôn ngữ việt nam 
+            - test_raw_khrme.txt là file chứa ngôn ngữ hiếm <không nhất thiết phải là khrme>
+            - km chỉ kí hiệu của ngôn ngữ khơ me: Đối với tiếng trung là zh-cn, đối với tiếng lào là: lo
