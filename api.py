@@ -34,13 +34,17 @@ def document_align_api():
 
     annotator = getAnnotator()
 
-    resultMatrixSim = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec)
+    resultMatrixSim1  = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=False)
+
+    resultMatrixSim2  = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=True)
 
     result = computeCosinBowPairFile(file_vn_raw , 'data/file_vn_translated_indexed.txt')
 
     print(result)
 
-    # print(resultMatrixSim[0][0])
+    print(resultMatrixSim1[0][0])
+
+    print(resultMatrixSim2[0][0])
 
     # getPairDocFromResult(resultMatrixSim , listDoc_vn_raw , listDoc_khrme_raw, 'result/resultDocAlign.txt', thresol= 0.9)
 

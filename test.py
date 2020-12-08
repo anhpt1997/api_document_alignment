@@ -1,3 +1,29 @@
-string = """WTO កំណែទម្រង់ដើម្បីឆ្លើយតបនឹងស្ថានភាពថ្មី លេខាធិការដ្ឋាននៃអង្គការពាណិជ្ជកម្មពិភពលោក (WTO) ទើបបានរៀបចំសិក្ខាសាលាតាមអ៊ិនធឺរណែត ដោយមានការចូលរួមពីតំណាងជាន់ខ្ពស់នៃបណ្តាប្រទេស អង្គការអន្តរជាតិ និងមជ្ឈដ្ឋានធុរកិច្ច អង្គការសង្គមរួមទាំងប្រព័ន្ធផ្សព្វផ្សាយ ដើម្បីពិភាក្សាលើផលប៉ះពាល់របស់ WTO ក្នុងរយៈពេល ២៥ ឆ្នាំកន្លងមក និងបញ្ហាដែលWTO ត្រូវដោះស្រាយក្នុងប៉ុន្មានឆ្នាំខាងមុខ ដើម្បីធានាបាននូវប្រព័ន្ធពាណិជ្ជកម្មសមភាពមួយ .  នៅក្នុងសិក្ខាសាលានេះ វាគ្មិនបានសង្កត់ធ្ងន់ថា ប្រព័ន្ធពាណិជ្ជកម្មពិភពលោកដែលផ្អែកលើច្បាប់ បន្តដើរតួនាទីយ៉ាងសំខាន់ ដោយឆ្លុះបញ្ចាំងតាមរយៈតួនាទីគន្លឹះនៃពាណិជ្ជកម្មអន្តរជាតិក្នុងការឆ្លើយតបនឹងការរីករាលដាលជំងឺរាតត្បាតកូវីដ ១៩ .  អង្គសិក្ខាសាលាក៏បានលើកឡើងថា កំណែទម្រង់របស់អង្គការពាណិជ្ជកម្មពិភពលោកគួរតែត្រូវបានផ្តល់អាទិភាព .  វាគ្មិនក៏បានលើកឡើងពីតួនាទីរបស់អង្គការពាណិជ្ជកម្មពិភពលោកនាពេលអនាគត ដូចជាការលើកកម្ពស់សន្តិភាព ការពារផែនដីនិងឆ្ពោះទៅគោលដៅអភិវឌ្ឍន៍ប្រកបដោយចីរភាព
-"""
-print(len(string))
+
+from utils import * 
+from w2vec import * 
+from handleVnText import *
+from segment import * 
+from comparePairDoc import * 
+
+w2vecmodel = getWord2Vec()
+annotator  = getAnnotator()
+
+path_src = 'test_raw_vn.txt'
+path_tgt = 'data/file_vn_translated_indexed.txt'
+src = readAndProcessDocForCosinBoW(path_src)
+tgt = readAndProcessDocForCosinBoW(path_tgt)
+list_src = [t.strip() for t in src.split()]
+list_tgt = [t.strip() for t in tgt.split()]
+print(list_src)
+print([t for t in list_src if t not in list_tgt])
+print(len([t for t in list_src if t not in list_tgt]) , len(list_src))
+#doc = readDocFromFile(path)
+#list_segment = segment_doc(doc , annotator)
+#print(list_segment)
+#print( 'oov ' ,  [word  for word in list_segment if word not  in w2vecmodel.vocab])
+#print('quân_ủy' in w2vecmodel.vocab)
+#segment = 'kề_vai'
+#print ( 'kề_vai'  in w2vecmodel.vocab , 'sát_cánh' in w2vecmodel.vocab)
+#a = sum( [ wordPieceForSegment(segment , w2vecmodel.vocab) for segment in list_segment] , [])
+#print(a)
+#print('oov ', [word  for word in a  if word not  in w2vecmodel.vocab])
