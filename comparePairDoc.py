@@ -26,15 +26,15 @@ def compute_cosine_simListDoc(list1 , list2):
 def computeCosinBowPairDoc(doc1, doc2):
 	return get_cosine_sim( [doc1 , doc2])[0,1]
 
-def readAndProcessDocForCosinBoW(file):
+def readAndProcessDocForCosinBoW(file , handleOOV = False):
 	with open(file, "r") as f:
 		text = f.read()
 		text = processDoc(text.replace("\n"," "))
 	return text
 
-def computeCosinBowPairFile(file_1 , file_2):
-	doc_1 = readAndProcessDocForCosinBoW(file_1)
-	doc_2 = readAndProcessDocForCosinBoW(file_2)
+def computeCosinBowPairFile(file_1 , file_2, handleOOV = False):
+	doc_1 = readAndProcessDocForCosinBoW(file_1 , handleOOV = handleOOV)
+	doc_2 = readAndProcessDocForCosinBoW(file_2 , handleOOV = handleOOV) 
 	return computeCosinBowPairDoc(doc_1 , doc_2)
 
 def jaccard_similarity(list1, list2):

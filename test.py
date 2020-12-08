@@ -15,8 +15,8 @@ tgt = readAndProcessDocForCosinBoW(path_tgt)
 list_src = [t.strip() for t in src.split()]
 list_tgt = [t.strip() for t in tgt.split()]
 print(list_src)
-print([t for t in list_src if t not in list_tgt])
-print(len([t for t in list_src if t not in list_tgt]) , len(list_src))
+# print([t for t in list_src if t not in list_tgt])
+# print(len([t for t in list_src if t not in list_tgt]) , len(list_src))
 #doc = readDocFromFile(path)
 #list_segment = segment_doc(doc , annotator)
 #print(list_segment)
