@@ -4,8 +4,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 import rouge
 import numpy as np
 from handleVnText import * 
-from cosin_sim import * 
-from w2vec import * 
 
 def get_cosine_sim(text): 
 	vectors = [t for t in get_vectors(text)]
@@ -75,11 +73,17 @@ def getDifferentBetweenPairDoc(doc1, doc2):
     word_2 = [t.strip() for t in doc2.split()]
     return [t for t in word_1 if t not in word_2]
 
-
-# vocab = getWord2Vec()
-# # print(vocab.wv['o'])
-# string1 = 'obama'
-# string2 ='obamaa'
-# vec1 = wordOOVtovec(string1 , vocab)
-# vec2 = wordOOVtovec(string2 , vocab)
-# print(cosinSimilarity(vec1 , vec2))
+import sys
+f_1 = sys.argv[1]
+f_2 = sys.argv[2]
+text_1 = readAndProcessDocForCosinBoW(f_1)
+text_2 = readAndProcessDocForCosinBoW(f_2)
+print("\n")
+temp_1 = " ".join(handleOOV(text_1))
+temp_2 = " ".join(handleOOV(text_2))
+print(temp_1)
+print("\n")
+print(temp_2)
+#print(getDifferentBetweenPairDoc(temp_1 , temp_2))
+# write_result_array(compute_cosine_simListDoc(translates , raws) , "test1/result_test_1.txt")
+print(computeCosinBowPairDoc(temp_1 , temp_2))
