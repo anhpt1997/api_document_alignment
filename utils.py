@@ -1,4 +1,5 @@
 from handleVnText import * 
+from sklearn.metrics import accuracy_score
 
 listPuncKhrme =['ៗ', '។' ,'៕']
 
@@ -149,6 +150,24 @@ def check_segmentUsingVocabVi(segment , vn_text):
         if norm_text(word.lower()) not in vn_text:
             return False
     return True
+
+def computeScoreThresol(result , label , thresol):
+    label_true_flatten = label.flatten()
+    label_predict = np.where(result < thresol , 0 , 1)
+    label_predict_flatten = label_predict.flatten()
+    return accuracy_score(label_true_flatten , label_predict_flatten)
+
+def computeThresolFromResult(result):
+    #result = matrix  n x m 
+    
+    #create matrix true label 
+    label_matrix = np.zeros_like(result)
+    list_index_label = [np.argmax(row) for row in result]
+    for i in range(len(label_matrix)):
+        label_matrix[i][list_index_label[i]] =  1
+    list_thresol = list(np.arange(0. , 1., 0.02))
+    return [ (thres ,computeScoreThresol(result, label_matrix , thres))  for thres in list_thresol]
+
 
 # if __name__ == "__main__":
 #     count = 0 

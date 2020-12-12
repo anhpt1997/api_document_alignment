@@ -24,27 +24,30 @@ print(list_word_tgt)
 score_2 = computeCosinBowPairDoc(" ".join(list_word_src) , " ".join(list_word_tgt))
 print(score_2)
 """
-import sys 
+# import sys 
+# def main():
+#     f_1 = sys.argv[1]
+#     f_2 = sys.argv[2]
+#     f_3 = sys.argv[3]
+#     count = 0 
+#     with open(f_3 , 'w' ) as f_w:
+#         with open(f_1 , 'r') as f_src:
+#             for src in f_src:
+#                 count += 1
+#                 print('count' , count)
+#                 temp = [] 
+#                 src = handleDocUsingVocab(src, annotator , w2vecmodel)
+#                 with open(f_2 , 'r') as f_tgt:
+#                     for tgt in f_tgt:
+#                         tgt = handleDocUsingVocab(tgt, annotator , w2vecmodel)
+#                         temp.append(str(computeCosinBowPairDoc(src , tgt)))
+#                     f_w.write( " ".join(temp) + "\n")
 def main():
-    f_1 = sys.argv[1]
-    f_2 = sys.argv[2]
-    f_3 = sys.argv[3]
-    count = 0 
-    with open(f_3 , 'w' ) as f_w:
-        with open(f_1 , 'r') as f_src:
-            for src in f_src:
-                count += 1
-                print('count' , count)
-                temp = [] 
-                src = handleDocUsingVocab(src, annotator , w2vecmodel)
-                with open(f_2 , 'r') as f_tgt:
-                    for tgt in f_tgt:
-                        tgt = handleDocUsingVocab(tgt, annotator , w2vecmodel)
-                        temp.append(str(computeCosinBowPairDoc(src , tgt)))
-                    f_w.write( " ".join(temp) + "\n")
-# data = np.loadtxt('result.txt')
-# print(data)
-# for row in data:
-#     print(sorted(row , reverse=True)[:5])
+    data = np.loadtxt('result_2.txt')
+    # print(data.shape)
+    # for row in data:
+    #     print(np.argmax(row), max(row))
+    result_thresol = computeThresolFromResult(data)
+    print(sorted(result_thresol , key = lambda x : x[1] , reverse= True))
 if __name__ == "__main__":
     main()
