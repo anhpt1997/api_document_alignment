@@ -5,6 +5,7 @@ from w2vec import *
 from segment import * 
 from google_translate.run_translate import * 
 from comparePairDoc import * 
+from pyvi import ViTokenizer as annotator
 
 def document_align_api():
 
@@ -18,33 +19,35 @@ def document_align_api():
     #convert doc -->[doc]
     listDoc_vn_raw = [listDoc_vn_raw]
     listDoc_khrme_raw = [listDoc_khrme_raw]
-
+    
     writeListDocToFile(listDoc_vn_raw , 'file_vn_raw_indexed.txt')
     writeListDocToFile(listDoc_khrme_raw , 'file_khrme_raw_indexed.txt')
 
-    splitAndWriteDocToFileBySegmentLength(file_in = 'file_khrme_raw_indexed.txt' , file_out = 'data/file_khrme_raw_indexed_segmented.txt' , segmentLength= 1000)
+    splitAndWriteDocToFileBySegmentLength(file_in = 'file_khrme_raw_indexed.txt' , file_out = 'data/file_khrme_raw_indexed_segmented.txt' , segmentLength= 800)
 
+    print('translating ......')
     translate_file(file_in = 'data/file_khrme_raw_indexed_segmented.txt' , file_out = 'data/file_khrme_raw_indexed_segmented_translated.txt'  ,src_lg= src_lg , dest_lg='vi')
-
+    
     readAndConcateSegmentToDocFromFile(file_in = 'data/file_khrme_raw_indexed_segmented_translated.txt' , file_out ='data/file_vn_translated_indexed.txt')
     # listDoc_vn_raw = readListDocFromFile(file = "test_raw_vn.txt")
-    listDoc_vn_translate = readLinesFromFile('data/file_vn_translated_indexed.txt')
 
-    vocabW2vec = getWord2Vec()
 
-    annotator = getAnnotator()
+    w2vecmodel = getWord2Vec()
 
-    resultMatrixSim1  = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=False)
+    # annotator = getAnnotator()
 
-    # resultMatrixSim2  = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=True)
+    #resultMatrixSim1  = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=False)
 
-    # result = computeCosinBowPairFile(file_vn_raw , 'data/file_vn_translated_indexed.txt')
+    #resultMatrixSim2  = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=True)
 
-    # print(result)
+    print('computing cosin bag of word .....')
+    result = computeCosinBowPairFile(file_vn_raw , 'data/file_vn_translated_indexed.txt', annotator , w2vecmodel)
 
-    print(resultMatrixSim1[0][0])
+    print(result)
 
-    # print(resultMatrixSim2[0][0])
+    #print(resultMatrixSim1[0][0])
+
+    #print(resultMatrixSim2[0][0])
 
     # getPairDocFromResult(resultMatrixSim , listDoc_vn_raw , listDoc_khrme_raw, 'result/resultDocAlign.txt', thresol= 0.9)
 

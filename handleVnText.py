@@ -1,7 +1,9 @@
 import string
 import re
 import unicodedata
-from utils import * 
+from utils import *
+from pyvi import ViTokenizer as annotator
+from w2vec import * 
 
 def norm_text(text):
 	text = unicodedata.normalize('NFC', text)
@@ -36,7 +38,6 @@ def getVocabVn():
         words =[norm_text(word.replace("\n",""))  for word in words]
     return words
 
-vocabVn = getVocabVn()
 
 with open('stop_word.txt') as f:
 	stopWords = f.readlines()
@@ -47,7 +48,8 @@ def removeSpecialCharacter(text):
 	text = text.replace("\n"," ")
 	text = text.replace("\t"," ")
 	text = text.replace("\xa0", " ")
-	text = text.replace("\u200b" , " ")
+	text = text.replace("<200b>" , " ")
+	text = text.replace("\u200b", " ")
 	text = removeMultiSpaceToSpace(text)
 	return text
 
@@ -91,12 +93,24 @@ def removeStopwordFromListString(list):
 def removePuncFromListString(list):
     return [t for t in list if t not in punc]
 
-def segment_doc(text1 , annotator):
+# def segment_doc(text1 , annotator):
+# 	text1 = norm_text(text1)
+# 	text1 = insertSpaceToPunce(text1)
+# 	text1 = removeSpecialCharacter(text1)
+# 	word_segmented_text1 = annotator.tokenize(text1) 
+# 	a = sum(word_segmented_text1 , [])
+# 	a = removeStopwordFromListString(a)
+# 	a = removePuncFromListString(a)
+# 	a = [word.lower() for word in a]
+# 	return a
+
+def segment_doc_usingpyvi(text1 , annotator):
 	text1 = norm_text(text1)
 	text1 = insertSpaceToPunce(text1)
 	text1 = removeSpecialCharacter(text1)
-	word_segmented_text1 = annotator.tokenize(text1) 
-	a = sum(word_segmented_text1 , [])
+	word_segmented_text1 = annotator.tokenize(text1)
+	# print('list word ' , word_segmented_text1)
+	a = word_segmented_text1.split()
 	a = removeStopwordFromListString(a)
 	a = removePuncFromListString(a)
 	a = [word.lower() for word in a]
@@ -112,4 +126,16 @@ def handleOOV(doc):
             result += list(word)
     return result
 
+def get_listWordByVocab(doc , annotator , w2vecmodel):
+	listSegment = segment_doc_usingpyvi(doc , annotator)
+	return sum( [ wordPieceForSegment(segment , w2vecmodel.vocab) for segment in listSegment] , [])
 
+
+def handleDocUsingVocab(doc, annotator , w2vecmodel):
+	return " ".join(get_listWordByVocab(doc, annotator , w2vecmodel))
+
+if __name__ == "__main__":
+	w2vecmodel = getWord2Vec()
+	doc = 'tôi học ở bách khoa hà nội việt nam'
+	a = handleDocUsingVocab(doc, annotator , w2vecmodel)
+	print(a)

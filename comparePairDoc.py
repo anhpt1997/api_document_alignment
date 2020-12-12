@@ -6,6 +6,7 @@ import numpy as np
 from handleVnText import * 
 from cosin_sim import * 
 from w2vec import * 
+from utils import  * 
 
 def get_cosine_sim(text): 
 	vectors = [t for t in get_vectors(text)]
@@ -26,29 +27,23 @@ def compute_cosine_simListDoc(list1 , list2):
 def computeCosinBowPairDoc(doc1, doc2):
 	return get_cosine_sim( [doc1 , doc2])[0,1]
 
-def readAndProcessDocForCosinBoW(file , handleOOV = False, w2vec = None):
+def readAndProcessDocForCosinBoW(file):
 	with open(file, "r") as f:
 		text = f.read()
 		text = processDoc(text.replace("\n"," "))
-	if handleOOV == False:
-		return text
-	else:
-		if w2vec == None :
-			return text 
-		else:
-			result = []
-			list_word = text.split()
-			for word in list_word:
-				if word in w2vec.vocab:
-					result.append(word)
-				else:
-					result += list(word)
-			return " ".join(result)
+	return text
 
-def computeCosinBowPairFile(file_1 , file_2, handleOOV = False , w2vec = None ):
-	doc_1 = readAndProcessDocForCosinBoW(file_1 , handleOOV = handleOOV , w2vec = w2vec)
-	doc_2 = readAndProcessDocForCosinBoW(file_2 , handleOOV = handleOOV , w2vec = w2vec) 
-	return computeCosinBowPairDoc(doc_1 , doc_2)
+# def computeCosinBowPairFile(file_1 , file_2, annotator = None , w2vec = None):
+# 	doc_1 = readAndProcessDocForCosinBoW(file_1)
+# 	doc_2 = readAndProcessDocForCosinBoW(file_2)
+# 	return computeCosinBowPairDoc(doc_1 , doc_2)
+
+def computeCosinBowPairFile(file_1 , file_2 , annotator , w2vecmodel):
+	doc_1 = readDocFromFile(file_1)
+	doc_2 = readDocFromFile(file_2)
+	doc_1_process = handleDocUsingVocab(doc_1 , annotator , w2vecmodel)
+	doc_2_process = handleDocUsingVocab(doc_2 , annotator , w2vecmodel)
+	return computeCosinBowPairDoc(doc_1_process , doc_2_process)
 
 def jaccard_similarity(list1, list2):
 	s1 = set(list1)
@@ -68,12 +63,12 @@ def jaccardSimListDoc(listDoc1, listDoc2):
 	return result
 
 def compute_rouge_document(string1 , string2 ):
-	evaluator = rouge.Rouge(metrics=['rouge-l'],
-						   max_n=3,
+	evaluator = rouge.Rouge(metrics=['rouge-n'],
+						   max_n=2,
 						   limit_length=True,
 						   length_limit=1000)
 	scores = evaluator.get_scores(string1, string2)
-	return scores['rouge-l']['f']
+	return scores['rouge-1']['f']
 
 def compute_rouge_listDoc( list1 , list2):
 
@@ -89,10 +84,4 @@ def getDifferentBetweenPairDoc(doc1, doc2):
     return [t for t in word_1 if t not in word_2]
 
 
-# vocab = getWord2Vec()
-# # print(vocab.wv['o'])
-# string1 = 'obama'
-# string2 ='obamaa'
-# vec1 = wordOOVtovec(string1 , vocab)
-# vec2 = wordOOVtovec(string2 , vocab)
-# print(cosinSimilarity(vec1 , vec2))
+

@@ -142,6 +142,22 @@ def getPairDocFromResult(resultSimMatrix , listDoc_vn, listDoc_khrme , file_out 
         for pairIndex in result:
             f.write(listDoc_vn[pairIndex[0]] + "<<<f>>>" + listDoc_khrme[pairIndex[1]]+"\n")
 
+def check_segmentUsingVocabVi(segment , vn_text):
+    segment = segment.lower()
+    list_word = segment.split("_")
+    for word in list_word:
+        if norm_text(word.lower()) not in vn_text:
+            return False
+    return True
 
-
-# string = """នារសៀលថ្ងៃទី៤ ធ្នូ ឧបនាយករដ្ឋមន្រ្តីនិងជារដ្ឋមន្រ្តីការបរទេសវៀត ណាមលោក Pham Binh Minh និងរដ្ឋមន្ត្រីការបរទេសន័រវេស លោកស្រី Marie Eriksen Soreide បានជួបពិភាក្សាការងារតាមប្រព័ន្ធវីដេអូ អំពីស្ថាន ភាពទំនាក់ទំនងរវាងប្រទេសទាំងពីរ និងកិច្ចសហប្រតិបត្តិការនៅក្រុម ប្រឹក្សាសន្តិសុខអង្គការសហប្រជាជាតិក្នុងឆ្នាំ២០២១ ពេលដែលន័រវេសចាប់ ផ្ដើមកាន់តំណែងជាសមាជិកមិនអចិន្រ្តៃយ៍នៃក្រុមប្រឹក្សាសន្តិសុខ។ ភាគី ទាំងពីរបានវាយតម្លៃខ្ពស់ចំពោះការអភិវឌ្ឍនៃទំនាក់ទំនងទ្វេភាគីនាពេល កន្លងមក ព្រមទាំងឯកភាពលើការថែរក្សានិងពង្រីកកិច្ចសហប្រតិបត្តិការ លើវិស័យសេដ្ឋកិច្ច ពាណិជ្ជកម្ម វិនិយោគ ជាពិសេសគឺវិស័យដែល ប្រទេសទាំងពីរមានឧត្តមភាពដូចជា ការចិញ្ចឹមជលផល ថាមពលស្អាត ការស្រាវជ្រាវវិទ្យាសាស្ត្រសមុទ្រ កិច្ចការពារបរិស្ថានសមុទ្រ និងប្រេង ឧស្ម័ន ជាដើម។ រដ្ឋមន្រ្តីការបរទេសទាំងពីររូបបានអះអាងថា ភាគីទាំងពីរ នឹងបន្តរក្សានិងបង្កើនយន្តការពិគ្រោះយោបល់ សំដៅចែករំលែកព័ត៌មាន ទស្សនៈទៅវិញទៅមក ស្វែងរកសម្លេងរួមនិងជំរុញការមូលមតិឯកឆន្ទ ក្នុង ការដោះស្រាយបញ្ហានានានៅក្នុងក្របខ័ណ្ឌក្រុមប្រឹក្សាសន្តិសុខអ.ស.បផងដែរ៕""
+# if __name__ == "__main__":
+#     count = 0 
+#     vocabVn = getVocabVn()
+#     with open('word.txt' , 'r') as f_r :
+#         with open('word_tokenize_vn.txt' , 'w') as f_w:
+#             for word in f_r:
+#                 count += 1
+#                 print(count)
+#                 word = word.replace("\n","").strip()
+#                 if check_segmentUsingVocabVi(word , vocabVn) == True:
+#                     f_w.write(word.lower()+"\n")
