@@ -1,6 +1,7 @@
 from handleVnText import * 
 from sklearn.metrics import accuracy_score
 import numpy as np 
+import random
 listPuncKhrme =['ៗ', '។' ,'៕']
 
 def splitDocByPunctuation(doc, listPunc, segment_length):
@@ -157,18 +158,25 @@ def computeScoreThresol(result , label , thresol):
     label_predict_flatten = label_predict.flatten()
     return accuracy_score(label_true_flatten , label_predict_flatten)
 
-def computeThresolFromResult(result):
+def computeThresolFromResult(result, label_matrix):
     #result = matrix  n x m 
-    if result.shape[0] != result.shape[1] :
-        print('not equal shape')
-        return 
-    num_row = result.shape[0]
-    label_matrix = np.identity( n = num_row , dtype= int)
     list_thresol = list(np.arange(0. , 1., 0.01))
     return [ (thres ,computeScoreThresol(result, label_matrix , thres))  for thres in list_thresol]
 
-def compute_acc(result , true_label , thresol):
-    pass 
+def split_Result_Label(result , label , ratio_train = 0.7):
+    numrow = result.shape[0]
+    num_train = int(numrow * ratio_train)
+    indexs = list(range(numrow))
+    random.shuffle(indexs)
+    index_train = indexs[:num_train]
+    index_test = indexs[num_train : ]
+    result_train = [ result[index] for index in index_train]
+    result_test = [result[index] for index in index_test]
+    label_train = [label[index] for index in index_train]
+    label_test  = [label[index] for index in index_test]
+    return {'train':{'result':result_train , 'label':label_train} , 'test':{'result':result_test, 'label':label_test}}
+
+
 # if __name__ == "__main__":
 #     count = 0 
 #     vocabVn = getVocabVn()

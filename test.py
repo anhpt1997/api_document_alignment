@@ -6,7 +6,7 @@ from comparePairDoc import *
 import numpy as np 
 from pyvi import ViTokenizer as annotator
 
-w2vecmodel = getWord2Vec()
+# w2vecmodel = getWord2Vec()
 """
 path_src = 'test_raw_vn.txt'
 path_tgt = 'data/file_vn_translated_indexed.txt'
@@ -45,9 +45,12 @@ import sys
 def main():
     data = np.loadtxt('result_2.txt')
     print('data shape ' , data.shape)
-    result_thresol = computeThresolFromResult(data)
-    thresol = sorted(result_thresol , key = lambda x : x[1] , reverse= True)[0][0]
-    print('best thresol ', thresol)
-    print('acc in test set ', )
+    #create label for result 
+    label_true = np.identity(n = data.shape[0] , dtype= int)
+    print(label_true)
+    # result_thresol = computeThresolFromResult(data)
+    # thresol = sorted(result_thresol , key = lambda x : x[1] , reverse= True)[0][0]
+    # print('best thresol ', thresol)
+    # print('acc in test set ', )
 if __name__ == "__main__":
     main()
