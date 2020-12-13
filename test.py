@@ -47,9 +47,12 @@ def main():
     print('data shape ' , data.shape)
     #create label for result 
     label_true = np.identity(n = data.shape[0] , dtype= int)
-    print(label_true)
-    # result_thresol = computeThresolFromResult(data)
-    # thresol = sorted(result_thresol , key = lambda x : x[1] , reverse= True)[0][0]
+    result_label_train_test = split_Result_Label(result = data , label = label_true , ratio_train=0.7)
+    resutl_label_train = result_label_train_test['train']
+    result_label_test = result_label_train_test['test']
+    result_thresol = computeThresolFromResult(result = resutl_label_train['result'],  label_matrix = resutl_label_train['label'])
+    thresol = sorted(result_thresol , key = lambda x : x[1] , reverse= True)
+    print(thresol)
     # print('best thresol ', thresol)
     # print('acc in test set ', )
 if __name__ == "__main__":

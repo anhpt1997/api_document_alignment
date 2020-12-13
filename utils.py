@@ -170,10 +170,10 @@ def split_Result_Label(result , label , ratio_train = 0.7):
     random.shuffle(indexs)
     index_train = indexs[:num_train]
     index_test = indexs[num_train : ]
-    result_train = [ result[index] for index in index_train]
-    result_test = [result[index] for index in index_test]
-    label_train = [label[index] for index in index_train]
-    label_test  = [label[index] for index in index_test]
+    result_train = np.asarray([ result[index] for index in index_train])
+    result_test = np.asarray([result[index] for index in index_test])
+    label_train = np.asarray([label[index] for index in index_train])
+    label_test  = np.asarray([label[index] for index in index_test])
     return {'train':{'result':result_train , 'label':label_train} , 'test':{'result':result_test, 'label':label_test}}
 
 
