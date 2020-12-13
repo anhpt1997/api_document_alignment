@@ -13,12 +13,12 @@ def document_align_api():
     file_khme_raw = sys.argv[2]
     src_lg = sys.argv[3]
 
-    listDoc_vn_raw = readDocFromFile(file_vn_raw)
-    listDoc_khrme_raw = readDocFromFile(file_khme_raw)
+    listDoc_vn_raw = readLinesFromFile(file_vn_raw)
+    listDoc_khrme_raw = readLinesFromFile(file_khme_raw)
 
     #convert doc -->[doc]
-    listDoc_vn_raw = [listDoc_vn_raw]
-    listDoc_khrme_raw = [listDoc_khrme_raw]
+    # listDoc_vn_raw = [listDoc_vn_raw]
+    # listDoc_khrme_raw = [listDoc_khrme_raw]
     
     writeListDocToFile(listDoc_vn_raw , 'file_vn_raw_indexed.txt')
     writeListDocToFile(listDoc_khrme_raw , 'file_khrme_raw_indexed.txt')
@@ -32,7 +32,7 @@ def document_align_api():
     # listDoc_vn_raw = readListDocFromFile(file = "test_raw_vn.txt")
 
 
-    w2vecmodel = getWord2Vec()
+    # w2vecmodel = getWord2Vec()
 
     # annotator = getAnnotator()
 
@@ -40,10 +40,10 @@ def document_align_api():
 
     #resultMatrixSim2  = computeMatrixSimilarityPairListDoc( listDoc_vn_raw , listDoc_vn_translate , annotator , vocabW2vec , handleOOV=True)
 
-    print('computing cosin bag of word .....')
-    result = computeCosinBowPairFile(file_vn_raw , 'data/file_vn_translated_indexed.txt', annotator , w2vecmodel)
+    # print('computing cosin bag of word .....')
+    # result = computeCosinBowPairFile(file_vn_raw , 'data/file_vn_translated_indexed.txt', annotator , w2vecmodel)
 
-    print(result)
+    # print(result)
 
     #print(resultMatrixSim1[0][0])
 

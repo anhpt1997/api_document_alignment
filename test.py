@@ -24,7 +24,7 @@ print(list_word_tgt)
 score_2 = computeCosinBowPairDoc(" ".join(list_word_src) , " ".join(list_word_tgt))
 print(score_2)
 """
-# import sys 
+import sys 
 # def main():
 #     f_1 = sys.argv[1]
 #     f_2 = sys.argv[2]
@@ -44,10 +44,10 @@ print(score_2)
 #                     f_w.write( " ".join(temp) + "\n")
 def main():
     data = np.loadtxt('result_2.txt')
-    # print(data.shape)
-    # for row in data:
-    #     print(np.argmax(row), max(row))
+    print('data shape ' , data.shape)
     result_thresol = computeThresolFromResult(data)
-    print(sorted(result_thresol , key = lambda x : x[1] , reverse= True))
+    thresol = sorted(result_thresol , key = lambda x : x[1] , reverse= True)[0][0]
+    print('best thresol ', thresol)
+    print('acc in test set ', )
 if __name__ == "__main__":
     main()

@@ -1,6 +1,6 @@
 from handleVnText import * 
 from sklearn.metrics import accuracy_score
-
+import numpy as np 
 listPuncKhrme =['ៗ', '។' ,'៕']
 
 def splitDocByPunctuation(doc, listPunc, segment_length):
@@ -159,16 +159,16 @@ def computeScoreThresol(result , label , thresol):
 
 def computeThresolFromResult(result):
     #result = matrix  n x m 
-    
-    #create matrix true label 
-    label_matrix = np.zeros_like(result)
-    list_index_label = [np.argmax(row) for row in result]
-    for i in range(len(label_matrix)):
-        label_matrix[i][list_index_label[i]] =  1
-    list_thresol = list(np.arange(0. , 1., 0.02))
+    if result.shape[0] != result.shape[1] :
+        print('not equal shape')
+        return 
+    num_row = result.shape[0]
+    label_matrix = np.identity( n = num_row , dtype= int)
+    list_thresol = list(np.arange(0. , 1., 0.01))
     return [ (thres ,computeScoreThresol(result, label_matrix , thres))  for thres in list_thresol]
 
-
+def compute_acc(result , true_label , thresol):
+    pass 
 # if __name__ == "__main__":
 #     count = 0 
 #     vocabVn = getVocabVn()
